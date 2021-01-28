@@ -3,10 +3,12 @@ import { Button, Modal, ModalBody, ModalFooter, Form, FormGroup, Label, Input, F
 import Footer from './Footer';
 import Header from './Header';
 import book from '../assets/book.webp';
+import axios from 'axios';
+
 
 
 const ProductReview = (props) => {
-    let productDetails=props.match.params
+    let productDetails = props.match.params
     useEffect(() => { console.log(productDetails) }, [productDetails])
 
     let [formDetails, setFormDetails] = useState({
@@ -17,7 +19,48 @@ const ProductReview = (props) => {
     })
     const handleSubmit = (e) => {
         e.preventDefault();
+        handlePayment(formDetails.userId, formDetails.email,formDetails.amount)
         console.log(formDetails);
+    }
+    const handlePayment = (id, email, amount) => {
+        console.log({id,email,amount})
+        const url = 'https://api.flutterwave.com/v3/payments';
+        try {
+            axios.post(
+                url, {
+                data: {
+                    "tx_ref": "hooli-tx-1920bbtytty",
+                    "amount": amount,
+                    "currency": "NGN",
+                    "redirect_url": "https://webhook.site/9d0b00ba-9a69-44fa-a43d-a82c33c36fdc",
+                    "payment_options": "card",
+                    "meta": {
+                        "consumer_id": 23,
+                        "consumer_mac": "92a3-912ba-1192a"
+                    },
+                    "customer": {
+                        "email": email,
+
+                    },
+                    "customizations": {
+                        id
+
+                    }
+                }
+            },
+                {
+                    headers: {
+                        Authorization: 'Bearer FLWSECK-fa8d6e7ae0398beb9ffa6c98d8bc0a0e-X'
+                    }
+                }
+            )
+
+        } catch (err) {
+            console.log(`error:${err}`)
+            
+        }
+
+
     }
 
     const handleInputChange = (e) => {
@@ -72,14 +115,14 @@ const ProductReview = (props) => {
                         <ModalBody>
                             <Form className='bg-light rounded p-3' >
                                 <FormGroup controlid="Email">
-                                    <Label  for='email'>Email</Label>
+                                    <Label for='email'>Email</Label>
                                     <Input
                                         type="email"
                                         placeholder="Email"
                                         id='email'
                                         value={formDetails.email}
                                         onChange={handleInputChange} />
-                                        <FormText>Enter your Email to recieve Receipt</FormText>
+                                    <FormText>Enter your Email to recieve Receipt</FormText>
                                 </FormGroup>
 
                                 <FormGroup controlid="userId">
