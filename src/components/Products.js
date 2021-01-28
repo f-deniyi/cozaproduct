@@ -3,7 +3,6 @@ import { Button, Modal, ModalBody, ModalFooter, Form, FormGroup, Label, Input, F
 import Footer from './Footer';
 import Header from './Header';
 import book from '../assets/book.webp';
-import { toast } from 'react-toastify';
 
 
 const Product = (props) => {

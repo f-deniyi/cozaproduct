@@ -3,7 +3,6 @@ import { Button, Modal, ModalBody, ModalFooter, Form, FormGroup, Label, Input, F
 import Footer from './Footer';
 import Header from './Header';
 import book from '../assets/book.webp';
-import { toast } from 'react-toastify';
 
 
 const ProductReview = (props) => {
@@ -18,7 +17,6 @@ const ProductReview = (props) => {
     })
     const handleSubmit = (e) => {
         e.preventDefault();
-        toast.success('product details grabbed succesfullly')
         console.log(formDetails);
     }
 
@@ -50,7 +48,7 @@ const ProductReview = (props) => {
                             color="info"
                             type="button"
                             className='mt-5'
-                            onClick={() => {handleSubmit()}}
+                            onClick={() => setModalOpen(!modalOpen)}
                         >
                             Confirm Payment
                     </Button>
