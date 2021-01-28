@@ -51,7 +51,8 @@ const ProductReview = (props) => {
             },
                 {
                     headers: {
-                        Authorization: 'Bearer FLWSECK-fa8d6e7ae0398beb9ffa6c98d8bc0a0e-X'
+                        "Authorization": 'Bearer FLWSECK-fa8d6e7ae0398beb9ffa6c98d8bc0a0e-X',
+                        'Access-Control-Allow-Origin': '*'
                     }
                 }
             )
