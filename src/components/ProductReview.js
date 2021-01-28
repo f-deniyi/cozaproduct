@@ -22,6 +22,7 @@ const ProductReview = (props) => {
         handlePayment(formDetails.userId, formDetails.email,formDetails.amount)
         console.log(formDetails);
     }
+
     const handlePayment = (id, email, amount) => {
         console.log({id,email,amount})
         const url = 'https://api.flutterwave.com/v3/payments';
@@ -93,7 +94,7 @@ const ProductReview = (props) => {
                             className='mt-5'
                             onClick={() => setModalOpen(!modalOpen)}
                         >
-                            Confirm Payment
+                            Buy
                     </Button>
                     </div>
 
@@ -156,7 +157,7 @@ const ProductReview = (props) => {
                                 Close
                             </Button>
                             <Button color="primary" type="button" onClick={handleSubmit}>
-                                Save changes
+                               Confirm Payment
                             </Button>
                         </ModalFooter>
                     </Modal>

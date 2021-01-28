@@ -3,6 +3,7 @@ import { Button, Modal, ModalBody, ModalFooter, Form, FormGroup, Label, Input, F
 import Footer from './Footer';
 import Header from './Header';
 import book from '../assets/book.webp';
+// import { toast } from 'react-toastify';
 
 
 const Product = (props) => {
@@ -16,6 +17,7 @@ const Product = (props) => {
         e.preventDefault();
      
         console.log(formDetails);
+        // toast.success('User succesfully captured',{autoClose:3000});
     }
 
     const handleInputChange = (e) => {
@@ -48,7 +50,7 @@ const Product = (props) => {
                             className='mt-5'
                             onClick={() => setModalOpen(!modalOpen)}
                         >
-                            Confirm Payment
+                            Buy
                     </Button>
                     </div>
 
@@ -111,7 +113,7 @@ const Product = (props) => {
                                 Close
                             </Button>
                             <Button color="primary" type="button" onClick={handleSubmit}>
-                               Pay
+                               Confirm Payment
                             </Button>
                         </ModalFooter>
                     </Modal>
