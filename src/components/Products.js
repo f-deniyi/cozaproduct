@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import Footer from './Footer';
 import Header from './Header';
@@ -10,6 +10,10 @@ import { toast } from 'react-toastify';
 
 
 const Product = (props) => {
+    let [publicKey, setPublicKey]=useState('');
+    useEffect(()=>{
+        setPublicKey('FLWPUBK-e4a0dfb31d3ba8905107df22a914018b-X');
+    })
     let [formDetails, setFormDetails] = useState({
         email: '',
         userId: '',
@@ -21,16 +25,9 @@ const Product = (props) => {
         customer_email: formDetails.email,
         customer_phone:'234803390095',
         amount: formDetails.price,
-        PBFPubKey: 'FLWPUBK-e4a0dfb31d3ba8905107df22a914018b-X',
+        PBFPubKey:publicKey ,
         custom_logo:'https://coza.org.ng/coza-normal.png',
         production: true,
-        callback:()=>{
-
-       },
-       onClose:()=>{
-        console.log('Transaction Closed')
-    
-       }
     }
 
     const {initializePayment} = useRavePayment(config)
