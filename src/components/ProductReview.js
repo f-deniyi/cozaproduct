@@ -14,39 +14,38 @@ const ProductReview = (props) => {
     let [formDetails, setFormDetails] = useState({
         email: '',
         userId: productDetails.userId,
-        price: ''
+        amount: ''
 
     })
     const handleSubmit = (e) => {
         e.preventDefault();
-        handlePayment(formDetails.userId, formDetails.email,formDetails.amount)
+        handlePayment(formDetails.userId, formDetails.email, formDetails.amount)
         console.log(formDetails);
     }
 
-    const handlePayment = (id, email, amount) => {
-        console.log({id,email,amount})
-        const url = 'https://api.flutterwave.com/v3/payments';
+    const handlePayment = async (id, email, amount) => {
+        console.log({ id, email, amount })
+        const url = 'https://cors-anywhere.herokuapp.com/https://api.flutterwave.com/v3/payments';
         try {
-            axios.post(
+            const testing = await axios.post(
                 url, {
-                data: {
-                    "tx_ref": "hooli-tx-1920bbtytty",
-                    "amount": amount,
-                    "currency": "NGN",
-                    "redirect_url": "https://webhook.site/9d0b00ba-9a69-44fa-a43d-a82c33c36fdc",
-                    "payment_options": "card",
-                    "meta": {
-                        "consumer_id": 23,
-                        "consumer_mac": "92a3-912ba-1192a"
-                    },
-                    "customer": {
-                        "email": email,
+                "tx_ref": "hooli-tx-1920bbtytty",
+                "amount": amount,
+                "currency": "NGN",
+                "redirect_url": "https://webhook.site/9d0b00ba-9a69-44fa-a43d-a82c33c36fdc",
+                "payment_options": "card",
+                "meta": {
+                    "consumer_id": 23,
+                    "consumer_mac": "92a3-912ba-1192a"
+                },
+                "customer": {
+                    "email": email,
 
-                    },
-                    "customizations": {
-                        id
+                },
+                "customizations": {
+                    'description':'Payment for COZA Product',
+                    'logo':'https://coza.org.ng/coza-normal.png'
 
-                    }
                 }
             },
                 {
@@ -56,10 +55,12 @@ const ProductReview = (props) => {
                     }
                 }
             )
+            console.log(testing.data.data.link);
+            window.location.replace(testing.data.data.link);
 
         } catch (err) {
             console.log(`error:${err}`)
-            
+
         }
 
 
@@ -138,13 +139,13 @@ const ProductReview = (props) => {
                                         onChange={handleInputChange} />
                                 </FormGroup>
 
-                                <FormGroup controlid="price">
-                                    <Label for='price'>Price</Label>
+                                <FormGroup controlid="amount">
+                                    <Label for='amount'>Amount</Label>
                                     <Input
                                         type="number"
-                                        placeholder="price"
-                                        id='price'
-                                        value={formDetails.price}
+                                        placeholder="Amount"
+                                        id='amount'
+                                        value={formDetails.amount}
                                         onChange={handleInputChange} />
                                 </FormGroup>
                             </Form>
@@ -158,7 +159,7 @@ const ProductReview = (props) => {
                                 Close
                             </Button>
                             <Button color="primary" type="button" onClick={handleSubmit}>
-                               Confirm Payment
+                                Confirm Payment
                             </Button>
                         </ModalFooter>
                     </Modal>
