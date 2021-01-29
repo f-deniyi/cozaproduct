@@ -52,7 +52,7 @@ const ProductReview = (props) => {
                 "tx_ref": "hooli-tx-1920bbtytty",
                 "amount": amount,
                 "currency": "NGN",
-                "redirect_url": "https://www.cozaproduct.herokuapp.com/transaction",
+                "redirect_url": "https://cozaproduct.herokuapp.com/transaction",
                 "payment_options": "card",
                 "meta": {
                     "consumer_id": 23,
