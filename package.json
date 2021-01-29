@@ -12,6 +12,8 @@
     "react-axios": "^2.0.4",
     "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
+    "react-loader-spinner": "^3.1.14",
+    "react-ravepayment": "^3.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-toastify": "^7.0.1",

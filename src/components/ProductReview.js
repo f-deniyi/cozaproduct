@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import Loader from 'react-loader-spinner';
 import Footer from './Footer';
 import Header from './Header';
 import book from '../assets/book.webp';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 
@@ -11,17 +13,35 @@ const ProductReview = (props) => {
     let productDetails = props.match.params
     useEffect(() => { console.log(productDetails) }, [productDetails])
 
+    // let [product, updateProduct]=useState('')
+
     let [formDetails, setFormDetails] = useState({
         email: '',
         userId: productDetails.userId,
         amount: ''
 
     })
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        updateLoadingState(!isLoading);
+        toast.warning('Please wait while we process your transaction');
         handlePayment(formDetails.userId, formDetails.email, formDetails.amount)
         console.log(formDetails);
     }
+
+
+    // const fetchTransactionDetails =async()=>{
+    //     try{
+    //         const response=axios.get('')
+    //         handlePayment(response.transId, )
+    //         console.log(response)
+    //     }catch(err){
+    //        toast.error(err.message)
+    //     }
+    // }
+
 
     const handlePayment = async (id, email, amount) => {
         console.log({ id, email, amount })
@@ -32,7 +52,7 @@ const ProductReview = (props) => {
                 "tx_ref": "hooli-tx-1920bbtytty",
                 "amount": amount,
                 "currency": "NGN",
-                "redirect_url": "https://webhook.site/9d0b00ba-9a69-44fa-a43d-a82c33c36fdc",
+                "redirect_url": "https://www.cozaproduct/transaction",
                 "payment_options": "card",
                 "meta": {
                     "consumer_id": 23,
@@ -43,8 +63,8 @@ const ProductReview = (props) => {
 
                 },
                 "customizations": {
-                    'description':'Payment for COZA Product',
-                    'logo':'https://coza.org.ng/coza-normal.png'
+                    'description': 'Payment for COZA Product',
+                    'logo': 'https://coza.org.ng/coza-normal.png'
 
                 }
             },
@@ -73,6 +93,7 @@ const ProductReview = (props) => {
         })
     }
     const [modalOpen, setModalOpen] = useState(false);
+    const [isLoading, updateLoadingState] = useState(false);
 
 
     return (
@@ -82,9 +103,9 @@ const ProductReview = (props) => {
                 <div className="">
                     <div className="mt-5 mb-3">
                         <div className='rounded mb-2 text-center'>
-                            <img src={book} className="img-responsive" alt='book'></img>
+                            <img src={book} style={{ width: "100%", height: "100%" }} className="img-responsive" alt='book'></img>
                         </div>
-                        <div className='mx-auto w-75'>
+                        <div className=''>
                             <h5 className="my-3">Name: Not in Vain! </h5>
                             <h5 className="mb-2">Price: #5000</h5>
                         </div>
@@ -110,18 +131,20 @@ const ProductReview = (props) => {
                                 aria-label="Close"
                                 className=" close"
                                 type="button"
+                                disabled={isLoading}
                                 onClick={() => setModalOpen(!modalOpen)}
                             >
                                 <span aria-hidden={true}>×</span>
                             </button>
                         </div>
                         <ModalBody>
-                            <Form className='bg-light rounded p-3' >
+                            <Form className='bg-light rounded p-3' onSubmit={handleSubmit}>
                                 <FormGroup controlid="Email">
                                     <Label for='email'>Email</Label>
                                     <Input
                                         type="email"
                                         placeholder="Email"
+                                        required
                                         id='email'
                                         value={formDetails.email}
                                         onChange={handleInputChange} />
@@ -148,19 +171,22 @@ const ProductReview = (props) => {
                                         value={formDetails.amount}
                                         onChange={handleInputChange} />
                                 </FormGroup>
+
+                                <button  className="my-2 w-100 btn btn-warning font-weight-bold" disabled={isLoading} type="submit" >
+                                    {!isLoading ? 'Confirm Payment' : <Loader type='Oval' color='#fff' height={30} width={30} />}
+                                </button>
                             </Form>
                         </ModalBody>
                         <ModalFooter>
                             <Button
                                 color="secondary"
                                 type="button"
+                                disabled={isLoading}
                                 onClick={() => setModalOpen(!modalOpen)}
                             >
                                 Close
                             </Button>
-                            <Button color="primary" type="button" onClick={handleSubmit}>
-                                Confirm Payment
-                            </Button>
+
                         </ModalFooter>
                     </Modal>
 

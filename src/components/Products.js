@@ -1,8 +1,11 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import Footer from './Footer';
 import Header from './Header';
 import book from '../assets/book.webp';
+import { Redirect } from 'react-router-dom';
+import { useRavePayment } from 'react-ravepayment';
+import { toast } from 'react-toastify';
 // import { toast } from 'react-toastify';
 
 
@@ -13,10 +16,30 @@ const Product = (props) => {
         price: ''
 
     })
+    const config = {
+        txref: 'rave-12345',
+        customer_email: formDetails.email,
+        customer_phone:'234803390095',
+        amount: formDetails.price,
+        PBFPubKey: 'FLWPUBK-e4a0dfb31d3ba8905107df22a914018b-X',
+        custom_logo:'https://coza.org.ng/coza-normal.png',
+        production: true,
+        callback:()=>{
+
+       },
+       onClose:()=>{
+        console.log('Transaction Closed')
+    
+       }
+    }
+
+    const {initializePayment} = useRavePayment(config)
+
     const handleSubmit = (e) => {
         e.preventDefault();
-     
+
         console.log(formDetails);
+        initializePayment();
         // toast.success('User succesfully captured',{autoClose:3000});
     }
 
@@ -58,7 +81,7 @@ const Product = (props) => {
                     <Modal isOpen={modalOpen}>
                         <div className=" modal-header">
                             <h5 className=" modal-title" id="exampleModalLabel">
-                            Not in Vain!
+                                Not in Vain!
                             </h5>
                             <button
                                 aria-label="Close"
@@ -72,14 +95,14 @@ const Product = (props) => {
                         <ModalBody>
                             <Form className='bg-light rounded p-3' >
                                 <FormGroup controlid="Email">
-                                    <Label  for='email'>Email</Label>
+                                    <Label for='email'>Email</Label>
                                     <Input
                                         type="email"
                                         placeholder="Email"
                                         id='email'
                                         value={formDetails.email}
                                         onChange={handleInputChange} />
-                                        <FormText>Enter your Email to recieve Receipt</FormText>
+                                    <FormText>Enter your Email to recieve Receipt</FormText>
                                 </FormGroup>
 
                                 <FormGroup controlid="userId">
@@ -113,7 +136,7 @@ const Product = (props) => {
                                 Close
                             </Button>
                             <Button color="primary" type="button" onClick={handleSubmit}>
-                               Confirm Payment
+                                Confirm Payment
                             </Button>
                         </ModalFooter>
                     </Modal>
