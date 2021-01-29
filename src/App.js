@@ -16,7 +16,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Product} />
           <Route exact path="/product/:productId/:userId" component={ProductReview} />
-          <Route exact path="/transaction/:transactionId" component={VerifyTransaction} />
+          <Route exact path="/transaction/:transactionStatus/:transactionId" component={VerifyTransaction} />
         </Switch>
         <ToastContainer />
       </Router >
