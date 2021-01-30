@@ -14,7 +14,7 @@ const Product = (props) => {
         fetchKeyAndProduct();
     })
     let [publicKey, setPublicKey] = useState('');
-    let [product, updateProduct]=useState({});
+    // let [product, updateProduct]=useState({});
 
     let productDetails = {
         productId: urlParams.productId,
@@ -29,10 +29,10 @@ const Product = (props) => {
 
     })
 
-    
+
     const fetchKeyAndProduct = () => {
-        // fetchPublicKey();
-        loadProductDetails()
+        fetchPublicKey();
+        // loadProductDetails()
         console.log(productDetails);
     }
 
@@ -47,9 +47,9 @@ const Product = (props) => {
         }
     }
 
-    const loadProductDetails = async () => {
-        console.log("not working yet");
-    }
+    // const loadProductDetails = async () => {
+    //     console.log("not working yet");
+    // }
 
 
     const config = {
