@@ -59,7 +59,7 @@ const Product = (props) => {
         amount: formDetails.price,
         PBFPubKey: publicKey,
         custom_logo: 'https://coza.org.ng/coza-normal.png',
-        custom_title:'Payment for COZA Product',
+        custom_title: 'Payment for COZA Product',
         production: true,
     }
 
@@ -132,11 +132,12 @@ const Product = (props) => {
                             </button>
                         </div>
                         <ModalBody>
-                            <Form className='bg-light rounded p-3' >
+                            <Form className='bg-light rounded p-3' onSubmit={handleSubmit} >
                                 <FormGroup controlid="Email">
                                     <Label for='email'>Email</Label>
                                     <Input
                                         type="email"
+                                        required
                                         placeholder="Email"
                                         id='email'
                                         value={formDetails.email}
@@ -164,6 +165,9 @@ const Product = (props) => {
                                         value={formDetails.price}
                                         onChange={handleInputChange} />
                                 </FormGroup>
+                                <button className='btn w-100 font-weight-bold btn-warning'  type="submit">
+                                    Confirm Payment
+                                </button>
                             </Form>
                         </ModalBody>
                         <ModalFooter>
@@ -173,9 +177,6 @@ const Product = (props) => {
                                 onClick={() => setModalOpen(!modalOpen)}
                             >
                                 Close
-                            </Button>
-                            <Button color="primary" type="button" onClick={handleSubmit}>
-                                Confirm Payment
                             </Button>
                         </ModalFooter>
                     </Modal>
