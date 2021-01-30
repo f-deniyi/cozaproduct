@@ -3,40 +3,82 @@ import { Button, Modal, ModalBody, ModalFooter, Form, FormGroup, Label, Input, F
 import Footer from './Footer';
 import Header from './Header';
 import book from '../assets/book.webp';
-import { Redirect } from 'react-router-dom';
 import { useRavePayment } from 'react-ravepayment';
 import { toast } from 'react-toastify';
-// import { toast } from 'react-toastify';
+import axios from 'axios';
 
 
 const Product = (props) => {
-    let [publicKey, setPublicKey]=useState('');
-    useEffect(()=>{
-        setPublicKey('FLWPUBK-e4a0dfb31d3ba8905107df22a914018b-X');
+    let urlParams = props.match.params;
+    useEffect(() => {
+        fetchKeyAndProduct();
     })
+    let [publicKey, setPublicKey] = useState('');
+    let [product, updateProduct]=useState({});
+
+    let productDetails = {
+        productId: urlParams.productId,
+        userId: urlParams.userId
+    }
+
+
     let [formDetails, setFormDetails] = useState({
         email: '',
         userId: '',
         price: ''
 
     })
+
+    
+    const fetchKeyAndProduct = () => {
+        // fetchPublicKey();
+        loadProductDetails()
+        console.log(productDetails);
+    }
+
+
+    const fetchPublicKey = async () => {
+        try {
+            const data = await axios.get('https://cors-anywhere.herokuapp.com/http://appadmin.coza.org.ng/api/v1/payment/initiate?name=store&gateway=flutterwave');
+            let publicKey = data.data.flutterwave_settings.public_key;
+            setPublicKey(publicKey);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const loadProductDetails = async () => {
+        console.log("not working yet");
+    }
+
+
     const config = {
         txref: 'rave-12345',
         customer_email: formDetails.email,
-        customer_phone:'234803390095',
+        customer_phone: '234803390095',
         amount: formDetails.price,
-        PBFPubKey:publicKey ,
-        custom_logo:'https://coza.org.ng/coza-normal.png',
+        PBFPubKey: publicKey,
+        custom_logo: 'https://coza.org.ng/coza-normal.png',
+        custom_title:'Payment for COZA Product',
         production: true,
     }
 
-    const {initializePayment} = useRavePayment(config)
+
+    const { initializePayment } = useRavePayment(config)
+    const onSuccess = () => {
+
+    }
+    const onClose = () => {
+        toast.error('Transaction Closed')
+        console.log('transaction closed');
+    }
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         console.log(formDetails);
-        initializePayment();
+        initializePayment(onSuccess, onClose);
         // toast.success('User succesfully captured',{autoClose:3000});
     }
 
