@@ -34,7 +34,7 @@ const Product = (props) => {
 
 
     const config = {
-        txref: 'rave-12345',
+        txref: userId,
         customer_email: formDetails.email,
         customer_phone: '234803390095',
         amount: product.price,
