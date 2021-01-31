@@ -17,7 +17,8 @@ const Product = (props) => {
 
     useEffect(() => {
         fetchKeyAndProduct()
-    },[])
+        //eslint ignore nextl
+    }, [])
 
     const fetchKeyAndProduct = () => {
         fetchPublicKey();
@@ -26,13 +27,10 @@ const Product = (props) => {
 
 
     let [formDetails, setFormDetails] = useState({
-        email: '',
-
+        email: ''
     })
 
-
-
-
+    //flutterwave configuration
     const config = {
         txref: userId,
         customer_email: formDetails.email,
@@ -44,11 +42,15 @@ const Product = (props) => {
         production: true,
     }
 
-
+    //Initiate flutterwave
     const { initializePayment } = useRavePayment(config)
+
+
     const onSuccess = () => {
 
     }
+
+    //
     const onClose = () => {
         toast.error('Transaction Closed')
         console.log('transaction closed');
@@ -57,7 +59,6 @@ const Product = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         console.log(formDetails);
         initializePayment(onSuccess, onClose);
     }
@@ -141,7 +142,7 @@ const Product = (props) => {
                                             id='userId'
                                             value={userId}
                                             disabled
-                                            onChange={handleInputChange} />
+                                        />
                                     </FormGroup>
 
                                     <FormGroup controlid="price">
@@ -152,7 +153,7 @@ const Product = (props) => {
                                             id='price'
                                             disabled
                                             value={product.price}
-                                            onChange={handleInputChange} />
+                                        />
                                     </FormGroup>
                                     <button className='btn w-100 font-weight-bold btn-warning' type="submit">
                                         Confirm Payment
@@ -178,6 +179,7 @@ const Product = (props) => {
     )
 
 }
+
 const mapStateToProps = (state) => {
     return {
         isLoading: state.isLoading,

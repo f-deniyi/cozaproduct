@@ -4,9 +4,9 @@ const Header = () => {
     return (
             <nav className="navbar fixed-top">
                 <a className="navbar-brand " href='/' >
-                    <img src={logo} style={{width:"120%", height:"120%"}} className="d-inline-block align-top" alt="" />
+                    <img src={logo} style={{width:"100%", height:"100%"}} className="d-inline-block align-top" alt="" />
                 </a>
-                <h2 className='text-light'>COZA Products</h2>
+                <h4 className='text-light'>COZA Products</h4>
             </nav>
     )
 }

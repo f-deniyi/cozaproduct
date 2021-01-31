@@ -9,8 +9,8 @@ const Load = () => {
                 <Loader
                     type='Oval'
                     color='#ffc107'
-                    height={70}
-                     width={70}
+                    height={50}
+                     width={50}
                 />
             </div>
         </div >
