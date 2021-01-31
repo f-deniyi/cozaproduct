@@ -1,62 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from "reactstrap";
-import Footer from './Footer';
-import Header from './Header';
-import book from '../assets/book.webp';
 import { useRavePayment } from 'react-ravepayment';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { fetchPublicKey } from '../redux/publicKey/action';
+import { fetchProduct } from '../redux/product/action';
+import Footer from './Footer';
+import Header from './Header';
+import Load from './Load';
 
 
 const Product = (props) => {
     let urlParams = props.match.params;
-    useEffect(() => {
-        fetchKeyAndProduct();
-    })
-    let [publicKey, setPublicKey] = useState('');
-    // let [product, updateProduct]=useState({});
+    const { productId, userId } = urlParams;
+    const { fetchProduct, fetchPublicKey, publicKey, product, isLoading } = props
 
-    let productDetails = {
-        productId: urlParams.productId,
-        userId: urlParams.userId
+    useEffect(() => {
+        fetchKeyAndProduct()
+    },[])
+
+    const fetchKeyAndProduct = () => {
+        fetchPublicKey();
+        fetchProduct(productId);
     }
 
 
     let [formDetails, setFormDetails] = useState({
         email: '',
-        userId: '',
-        price: ''
 
     })
 
 
-    const fetchKeyAndProduct = () => {
-        fetchPublicKey();
-        // loadProductDetails()
-        console.log(productDetails);
-    }
-
-
-    const fetchPublicKey = async () => {
-        try {
-            const data = await axios.get('https://cors-anywhere.herokuapp.com/http://appadmin.coza.org.ng/api/v1/payment/initiate?name=store&gateway=flutterwave');
-            let publicKey = data.data.flutterwave_settings.public_key;
-            setPublicKey(publicKey);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    // const loadProductDetails = async () => {
-    //     console.log("not working yet");
-    // }
 
 
     const config = {
         txref: 'rave-12345',
         customer_email: formDetails.email,
         customer_phone: '234803390095',
-        amount: formDetails.price,
+        amount: product.price,
         PBFPubKey: publicKey,
         custom_logo: 'https://coza.org.ng/coza-normal.png',
         custom_title: 'Payment for COZA Product',
@@ -79,7 +60,6 @@ const Product = (props) => {
 
         console.log(formDetails);
         initializePayment(onSuccess, onClose);
-        // toast.success('User succesfully captured',{autoClose:3000});
     }
 
     const handleInputChange = (e) => {
@@ -91,101 +71,124 @@ const Product = (props) => {
     const [modalOpen, setModalOpen] = useState(false);
 
 
+
+
+
     return (
         <React.Fragment>
             <Header />
-            <div className="container">
-                <div className="">
-                    <div className="mt-5 mb-3">
-                        <div className='rounded mb-2 text-center'>
-                            <img src={book} className="img-responsive" alt='book'></img>
+            { isLoading ? <Load /> :
+
+                <div className="container mt-5">
+                    <div className="py-3">
+                        <div className="mt-4 mb-3">
+                            <div className='rounded mt-3 mb-2 text-center'>
+                                <img src={product.cover_image} className="img-fluid" alt='product'></img>
+                            </div>
+                            <div className=''>
+                                <h5 className="my-2"><span className='font-weight-bold'>Title:</span> {`${product.title}`}</h5>
+                                <h5 className="mb-2"><span className='font-weight-bold'>Author:</span> {`${product.author}`}</h5>
+                                <h5 className="mb-2"><span className='font-weight-bold'>Description:</span> {`${product.description}`}</h5>
+                                <h5 className="mb-2"><span className='font-weight-bold'>Price:</span> {`${product.price}`}</h5>
+                            </div>
                         </div>
-                        <div className='mx-auto w-75'>
-                            <h5 className="my-3">Name: Not in Vain! </h5>
-                            <h5 className="mb-2">Price: #5000</h5>
-                        </div>
-                    </div>
-                    <div className='text-center'>
-                        <Button
-                            color="info"
-                            type="button"
-                            className='mt-5'
-                            onClick={() => setModalOpen(!modalOpen)}
-                        >
-                            Buy
-                    </Button>
-                    </div>
 
-
-                    <Modal isOpen={modalOpen}>
-                        <div className=" modal-header">
-                            <h5 className=" modal-title" id="exampleModalLabel">
-                                Not in Vain!
-                            </h5>
-                            <button
-                                aria-label="Close"
-                                className=" close"
-                                type="button"
-                                onClick={() => setModalOpen(!modalOpen)}
-                            >
-                                <span aria-hidden={true}>×</span>
-                            </button>
-                        </div>
-                        <ModalBody>
-                            <Form className='bg-light rounded p-3' onSubmit={handleSubmit} >
-                                <FormGroup controlid="Email">
-                                    <Label for='email'>Email</Label>
-                                    <Input
-                                        type="email"
-                                        required
-                                        placeholder="Email"
-                                        id='email'
-                                        value={formDetails.email}
-                                        onChange={handleInputChange} />
-                                    <FormText>Enter your Email to recieve Receipt</FormText>
-                                </FormGroup>
-
-                                <FormGroup controlid="userId">
-                                    <Label for='userId'>  User Id</Label>
-                                    <Input
-                                        type="text"
-                                        placeholder="User Id"
-                                        id='userId'
-                                        value={formDetails.userId}
-                                        disabled
-                                        onChange={handleInputChange} />
-                                </FormGroup>
-
-                                <FormGroup controlid="price">
-                                    <Label for='price'>Price</Label>
-                                    <Input
-                                        type="number"
-                                        placeholder="price"
-                                        id='price'
-                                        value={formDetails.price}
-                                        onChange={handleInputChange} />
-                                </FormGroup>
-                                <button className='btn w-100 font-weight-bold btn-warning'  type="submit">
-                                    Confirm Payment
-                                </button>
-                            </Form>
-                        </ModalBody>
-                        <ModalFooter>
+                        <div className='text-center py-2'>
                             <Button
-                                color="secondary"
+                                color="warning"
                                 type="button"
+                                className='mb-5 w-50 font-weight-bold'
                                 onClick={() => setModalOpen(!modalOpen)}
                             >
-                                Close
-                            </Button>
-                        </ModalFooter>
-                    </Modal>
+                                Buy
+                    </Button>
+                        </div>
 
+
+                        <Modal isOpen={modalOpen}>
+                            <div className=" modal-header">
+                                <h5 className=" modal-title" id="exampleModalLabel">
+                                    {product.title}
+                                </h5>
+                                <button
+                                    aria-label="Close"
+                                    className=" close"
+                                    type="button"
+                                    onClick={() => setModalOpen(!modalOpen)}
+                                >
+                                    <span aria-hidden={true}>×</span>
+                                </button>
+                            </div>
+                            <ModalBody>
+                                <Form className='bg-light rounded p-3' onSubmit={handleSubmit} >
+                                    <FormGroup controlid="Email">
+                                        <Label for='email'>Email</Label>
+                                        <Input
+                                            type="email"
+                                            required
+                                            placeholder="Email"
+                                            id='email'
+                                            value={formDetails.email}
+                                            onChange={handleInputChange} />
+                                        <FormText>Enter your Email to recieve Receipt</FormText>
+                                    </FormGroup>
+
+                                    <FormGroup controlid="userId">
+                                        <Label for='userId'>  User Id</Label>
+                                        <Input
+                                            type="text"
+                                            placeholder="User Id"
+                                            id='userId'
+                                            value={userId}
+                                            disabled
+                                            onChange={handleInputChange} />
+                                    </FormGroup>
+
+                                    <FormGroup controlid="price">
+                                        <Label for='price'>Price</Label>
+                                        <Input
+                                            type="number"
+                                            placeholder="price"
+                                            id='price'
+                                            disabled
+                                            value={product.price}
+                                            onChange={handleInputChange} />
+                                    </FormGroup>
+                                    <button className='btn w-100 font-weight-bold btn-warning' type="submit">
+                                        Confirm Payment
+                                </button>
+                                </Form>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button
+                                    color="secondary"
+                                    type="button"
+                                    onClick={() => setModalOpen(!modalOpen)}
+                                >
+                                    Close
+                            </Button>
+                            </ModalFooter>
+                        </Modal>
+
+                    </div>
                 </div>
-            </div>
+            }
             <Footer />
         </React.Fragment>
     )
 
 }
-export default Product;
+const mapStateToProps = (state) => {
+    return {
+        isLoading: state.isLoading,
+        publicKey: state.publicKey,
+        product: state.product
+    }
+}
+const mapDispatchToProps = {
+    fetchProduct: fetchProduct,
+    fetchPublicKey: fetchPublicKey
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

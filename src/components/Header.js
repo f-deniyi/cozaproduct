@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../assets/logo.png'
 const Header = () => {
     return (
-            <nav className="navbar fixed">
+            <nav className="navbar fixed-top">
                 <a className="navbar-brand " href='/' >
                     <img src={logo} style={{width:"120%", height:"120%"}} className="d-inline-block align-top" alt="" />
                 </a>
