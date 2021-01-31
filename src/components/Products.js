@@ -82,11 +82,11 @@ const Product = (props) => {
 
                 <div className="container mt-5">
                     <div className="py-3">
-                        <div className="mt-4 mb-3">
-                            <div className='rounded mt-3 mb-2 text-center'>
-                                <img src={product.cover_image} className="img-fluid" alt='product'></img>
+                        <div className="mt-4 mb-3 card">
+                            <div className='text-center'>
+                                <img src={product.cover_image} className="card-img-top img-fluid" alt='product'></img>
                             </div>
-                            <div className=''>
+                            <div className='card-body'>
                                 <h5 className="my-2"><span className='font-weight-bold'>Title:</span> {`${product.title}`}</h5>
                                 <h5 className="mb-2"><span className='font-weight-bold'>Author:</span> {`${product.author}`}</h5>
                                 <h5 className="mb-2"><span className='font-weight-bold'>Description:</span> {`${product.description}`}</h5>
