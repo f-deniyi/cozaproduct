@@ -12,8 +12,10 @@ function* initiateProductFetch({ payload: productId }) {
         console.log(fetchedProduct);
         yield put(setProduct(fetchedProduct));
     } catch (err) {
-        // console.log(err)
-        yield put(setError('Item not found in store, check back later.'));
+        // console.log(err);
+        // console.log(err.response);
+        // console.log(err.request)
+        yield put(setError(err.response.data.message));
     }
 
 }

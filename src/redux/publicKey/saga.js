@@ -10,6 +10,9 @@ function* fetchKey() {
          yield put(setKey(fetchedPublicKey));
     }
    catch(err){
+    // console.log(err);
+    // console.log(err.response);
+    // console.log(err.request);
     yield put(setError('Something bad happened. Please come back later when we fixed the problem'));
    }
 }

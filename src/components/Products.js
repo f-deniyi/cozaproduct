@@ -93,7 +93,7 @@ const Product = (props) => {
             {error && toast.warning(error)}
             {  error ?
                 <div className='position-relative vh-100'>
-                    <div className='error'>
+                    <div className='error w-75 text-center'>
                         <h5>{error}</h5>
                     </div>
                 </div> : isLoading ? <Load /> :
