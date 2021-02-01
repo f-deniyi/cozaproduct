@@ -1,11 +1,17 @@
 import { call,put, takeLatest } from "redux-saga/effects";
 import { fetchPublicKeyAPI } from "../../api";
-import {setKey} from './action'
+import {setKey} from './action';
+import {setError} from '../error/action';
 
 function* fetchKey() {
-    const fetchedPublicKey = yield call(fetchPublicKeyAPI);
-    console.log(fetchedPublicKey);
-     yield put(setKey(fetchedPublicKey));
+    try{
+        const fetchedPublicKey = yield call(fetchPublicKeyAPI);
+        console.log(fetchedPublicKey);
+         yield put(setKey(fetchedPublicKey));
+    }
+   catch(err){
+    yield put(setError('Something bad happened. Please come back later when we fixed the problem'));
+   }
 }
 
 export function* watchKeyLoadSaga(){

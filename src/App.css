@@ -10,7 +10,7 @@ body{
   position: relative;
 }
 
-.spinner{
+.spinner, .error{
   margin: 0;
   position: absolute;
   top: 50%;

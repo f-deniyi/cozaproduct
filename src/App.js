@@ -19,11 +19,10 @@ function App() {
           <Switch>
             <Route exact path="/:productId/:userId" component={Product} />
             <Route exact path="/transaction" component={VerifyTransaction} />
+            {/* <ToastContainer /> */}
           </Switch>
-          <ToastContainer />
         </Router >
       </Provider>
-
     </React.Fragment>
 
   );
