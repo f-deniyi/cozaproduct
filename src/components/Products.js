@@ -8,6 +8,9 @@ import { fetchProduct } from '../redux/product/action';
 import Footer from './Footer';
 import Header from './Header';
 import Load from './Load';
+import { useHistory } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
+import VerifyTransaction from './VerifyTransaction';
 
 
 const Product = (props) => {
@@ -46,16 +49,22 @@ const Product = (props) => {
     const { initializePayment } = useRavePayment(config)
 
 
-    const onSuccess = () => {
+    const onSuccess = (reference) => {
+      console.log(reference);
 
     }
 
     //
     const onClose = () => {
         toast.error('Transaction Closed')
-        console.log('transaction closed');
+        // console.log('transaction closed');
     }
+//     let history=useHistory();
+//    const VerifyTransaction=()=>{
+//         toast.error('Transaction Closed');
+//         history.push('/transaction');
 
+//    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
