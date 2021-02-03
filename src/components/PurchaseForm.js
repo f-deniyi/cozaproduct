@@ -44,7 +44,8 @@ const PurchaseForm = (props) => {
 
     const onSuccess = (ref) => {
         console.log(ref);
-        window.flutter_inappwebview.callHandler('payResponse', 1, (JSON.stringify(ref))).then(function(result) {
+        window.flutter_inappwebview.callHandler('payResponse', 1, JSON.stringify(ref)).then(function(result) {
+            console.log(result);
         });
         // let flwRef=ref.data.data.flwRef
         // window.location.assign(`/transaction/${flwRef}/${userId}/${productId}`);
@@ -53,6 +54,7 @@ const PurchaseForm = (props) => {
 
     const onClose = () => {
         window.flutter_inappwebview.callHandler('payResponse', 2, 2).then(function(result) {
+            console.log(result);
         });
     }
 
