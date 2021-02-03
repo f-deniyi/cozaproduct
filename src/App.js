@@ -5,9 +5,9 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-toastify/dist/ReactToastify.css";
 import store from './redux/store'
-import Product from './components/Products';
 import VerifyTransaction from './components/VerifyTransaction';
 import { Provider } from 'react-redux';
+import ProductStore from './view/productStore';
 
 
 
@@ -17,9 +17,8 @@ function App() {
       <Provider store={store}>
         <Router>
           <Switch>
-            <Route exact path="/:productId/:userId" component={Product} />
-            <Route exact path="/transaction" component={VerifyTransaction} />
-            {/* <ToastContainer /> */}
+            <Route exact path="/:productId/:userId" component={ProductStore} />
+            <Route exact path="/transaction/:flwRef/:userId/:productId" component={VerifyTransaction} />
           </Switch>
         </Router >
       </Provider>

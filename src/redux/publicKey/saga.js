@@ -6,7 +6,7 @@ import {setError} from '../error/action';
 function* fetchKey() {
     try{
         const fetchedPublicKey = yield call(fetchPublicKeyAPI);
-        console.log(fetchedPublicKey);
+        // console.log(fetchedPublicKey);
          yield put(setKey(fetchedPublicKey));
     }
    catch(err){

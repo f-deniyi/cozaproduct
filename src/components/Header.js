@@ -6,7 +6,7 @@ const Header = () => {
                 <a className="navbar-brand " href='/' >
                     <img src={logo} style={{width:"100%", height:"100%"}} className="d-inline-block align-top" alt="" />
                 </a>
-                <h4 className='text-light'>COZA Products</h4>
+                <h4 className='text-light'>COZA Store</h4>
             </nav>
     )
 }

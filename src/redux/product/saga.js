@@ -7,14 +7,12 @@ import { setProduct } from './action';
 
 function* initiateProductFetch({ payload: productId }) {
     try {
-        console.log(productId);
+        // console.log(productId);
         const fetchedProduct = yield call(fetchProductDetailsAPI, productId);
-        console.log(fetchedProduct);
+        // console.log(fetchedProduct);
         yield put(setProduct(fetchedProduct));
     } catch (err) {
-        // console.log(err);
-        // console.log(err.response);
-        // console.log(err.request)
+       
         yield put(setError(err.response.data.message));
     }
 

@@ -8,8 +8,7 @@ import { fetchProduct } from '../redux/product/action';
 import Footer from './Footer';
 import Header from './Header';
 import Load from './Load';
-import { useHistory } from "react-router-dom";
-import VerifyTransaction from './VerifyTransaction';
+
 
 
 const Product = (props) => {
@@ -19,8 +18,7 @@ const Product = (props) => {
 
     useEffect(() => {
         fetchKeyAndProduct()
-        //eslint ignore nextl
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     const fetchKeyAndProduct = () => {
         fetchPublicKey();
