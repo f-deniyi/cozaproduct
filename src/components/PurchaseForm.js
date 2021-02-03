@@ -48,7 +48,9 @@ const PurchaseForm = (props) => {
 
         // console.log(`cozaResponse:[${transanctionId}]`)
         window.addEventListener("flutterInAppWebViewPlatformReady", function (event) {
-            window.flutter_inappwebview.callHandler('payResponse', 1, JSON.stringify(ref), { "Access-Control-Allow-Origin": "*" }).then(function (result) {
+            window.flutter_inappwebview.callHandler('payResponse', 1, JSON.stringify(ref), { "Access-Control-Allow-Origin": "*" })
+            .then((result)=>{
+                console.log(result);
             });
         }
         )
@@ -60,7 +62,8 @@ const PurchaseForm = (props) => {
 
     const onClose = () => {
         window.addEventListener("flutterInAppWebViewPlatformReady", function (event) {
-            window.flutter_inappwebview.callHandler('payResponse', 2, 2, { "Access-Control-Allow-Origin": "*" }).then(function (result) {
+            window.flutter_inappwebview.callHandler('payResponse', 2, 2, { "Access-Control-Allow-Origin": "*" }).then((result)=> {
+                console.log(result);
             });
         }
         )
