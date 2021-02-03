@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 
 const PurchaseForm = (props) => {
-    const { userId, product ,publicKey} = props;
+    const { userId, product, publicKey } = props;
     const [modalOpen, setModalOpen] = useState(false);
 
     let [formDetails, setFormDetails] = useState({
@@ -36,25 +36,34 @@ const PurchaseForm = (props) => {
     const { initializePayment } = useRavePayment(config);
 
 
-//     const VerifyTransaction=(flwRef)=>{
-//         toast.error('Transaction Closed');
-//         history.push(`/transaction/${flwRef}/${userId}/${productId}`);
+    //     const VerifyTransaction=(flwRef)=>{
+    //         toast.error('Transaction Closed');
+    //         history.push(`/transaction/${flwRef}/${userId}/${productId}`);
 
-//    }
+    //    }
 
     const onSuccess = (ref) => {
-        console.log(ref);
-        let transanctionId=ref.tx.id; 
-        
-        console.log(`cozaResponse:[${transanctionId}]`)
-      
+        // console.log(ref);
+        // let transanctionId=ref.tx.id; 
+
+        // console.log(`cozaResponse:[${transanctionId}]`)
+        window.addEventListener("flutterInAppWebViewPlatformReady", function (event) {
+            window.flutter_inappwebview.callHandler('payResponse', 1, JSON.stringify(ref), { "Access-Control-Allow-Origin": "*" }).then(function (result) {
+            });
+        }
+        )
+
         // let flwRef=ref.data.data.flwRef
         // window.location.assign(`/transaction/${flwRef}/${userId}/${productId}`);
 
     }
 
     const onClose = () => {
-        console.log(`cozaResponse:[close]`)
+        window.addEventListener("flutterInAppWebViewPlatformReady", function (event) {
+            window.flutter_inappwebview.callHandler('payResponse', 2, 2, { "Access-Control-Allow-Origin": "*" }).then(function (result) {
+            });
+        }
+        )
 
     }
 
