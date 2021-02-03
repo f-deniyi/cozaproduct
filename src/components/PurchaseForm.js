@@ -44,8 +44,8 @@ const PurchaseForm = (props) => {
 
     const onSuccess = (ref) => {
         console.log(ref);
-        let flwRef=ref.data.data.flwRef
-        window.location.assign(`/transaction/${flwRef}/${userId}/${productId}`);
+        // let flwRef=ref.data.data.flwRef
+        // window.location.assign(`/transaction/${flwRef}/${userId}/${productId}`);
 
     }
 
