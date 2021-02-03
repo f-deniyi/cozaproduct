@@ -44,7 +44,8 @@ const PurchaseForm = (props) => {
 
     const onSuccess = (ref) => {
         console.log(ref);
-        let transanctionId=ref.tx.id;
+        let transanctionId=ref.tx.id; 
+        
         console.log(`cozaResponse:[${transanctionId}]`)
       
         // let flwRef=ref.data.data.flwRef
