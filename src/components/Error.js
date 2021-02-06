@@ -6,6 +6,7 @@ const Error = (props) => {
     return (
         <div className='position-relative vh-100'>
             <div className='error w-75 text-center'>
+                <h1>&#9888;</h1>
                 <h5>{error}</h5>
             </div>
         </div>
