@@ -15,15 +15,13 @@ const ProductStore = (props) => {
     const { productId, userId } = urlParams;
     let { error, isLoading, fetchProduct, fetchPublicKey } = props
 
-    const fetchKeyAndProduct = () => {
-        console.log('fetching key');
-        fetchPublicKey();
-        console.log('fetching product');
-        fetchProduct(productId);
-    }
 
     useEffect(() => {
-        fetchKeyAndProduct()
+        fetchProduct(productId);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        fetchPublicKey();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
